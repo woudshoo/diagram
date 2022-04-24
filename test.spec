@@ -1,8 +1,12 @@
 (diagram
+ (eval (defun f-node (id desc) (file-node id ".TST" desc)))
+ (eval (defun bold (string) (tt::with-style  (:font-size 8 :h-align :center :font "Helvetica-Bold") string)))
  (node b "box")
  (node h "h-mode-mixin")
- (node c "cast")
+ (node c (bold "cast"))
+ (node d (tt::paragraph () (tt::with-style  (:font-size 8 :h-align :center :font "Helvetica-Bold") "HEAD") :eol "And more" :eol (bold "Next line")))
  (file-node f ".csv" "A nice file")
+ (f-node g "And a test")
  (-o b h)
  (<- b h)
  (<- b f)

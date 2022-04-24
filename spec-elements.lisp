@@ -10,9 +10,12 @@
 
 
 (defun spec::node (id label)
-  (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12 :color '(1 0 0)) (tt::put-string label)))
+  (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12 :color '(1 0 0))
+		 (etypecase label
+		   (string (tt::put-string label))
+		   (t (eval label)))))
 	 (vbox (tt::make-filled-vbox text 70 400))
-	 (node (make-instance 'graph-node :data vbox :graph *current-graph*)))
+	 (node (make-instance 'graph-node :fixed-width t :data vbox :graph *current-graph*)))
     (register-node id node)
     node))
 

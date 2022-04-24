@@ -12,6 +12,7 @@
 		"BORDER-COLOR"
 		"X" "Y"
 		"DX" "DY"
+		"OFFSET"
 		"ADJUST-GRAPH-NODE-SIZE"
 		"STROKE" "STROKE-NODE" "STROKE-NODE-CONTENT")
   (:import-from "PDF"
