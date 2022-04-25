@@ -15,7 +15,7 @@
 		   (string (tt::put-string label))
 		   (t (eval label)))))
 	 (vbox (tt::make-filled-vbox text 70 400))
-	 (node (make-instance 'graph-node :fixed-width t :data vbox :graph *current-graph*)))
+	 (node (make-instance 'graph-node :fixed-width t :data vbox :graph *current-graph* :decoration nil)))
     (register-node id node)
     node))
 

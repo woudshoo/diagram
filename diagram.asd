@@ -10,4 +10,6 @@
   :components ((:file "package")
                (:file "diagram")
 	       (:file "spec")
-	       (:file "spec-elements")))
+	       (:file "spec-elements")
+	       (:file "file-node")
+	       (:file "test")))
