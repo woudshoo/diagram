@@ -11,3 +11,6 @@
 	(stroke graph  0 (+ (dy graph) 0)))
       (write-document out-file))))
 
+(defun dot-file-from-spec (in-file)
+  (let ((graph (graph-from-spec-file in-file)))
+    (tt::gen-graph-dot-data graph t)))

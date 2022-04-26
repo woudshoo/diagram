@@ -15,10 +15,16 @@
 		   (string (tt::put-string label))
 		   (t (eval label)))))
 	 (vbox (tt::make-filled-vbox text 70 400))
-	 (node (make-instance 'graph-node :fixed-width t :data vbox :graph *current-graph* :decoration nil)))
+	 (node (make-instance 'graph-node :fixed-width t :data vbox :graph *current-graph* :decoration tt::+box+)))
     (register-node id node)
     node))
 
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+(defun spec::same-rank (&rest ids)
+  (add-rank-constraint *current-graph* "same"
+		       (mapcar #'get-node ids)))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun spec::-> (id-a id-b)
   (make-instance 'graph-edge :graph *current-graph*
 			     :head (get-node id-a) :tail (get-node id-b)
@@ -43,4 +49,6 @@
   (make-instance 'graph-edge :graph *current-graph*
 			     :head (get-node id-a) :tail (get-node id-b)
 			     :edge-arrows '(:tail :arrow :head :arrow)))
+
+
 
