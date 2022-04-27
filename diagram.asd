@@ -12,4 +12,5 @@
 	       (:file "spec")
 	       (:file "spec-elements")
 	       (:file "file-node")
+	       (:file "cluster")
 	       (:file "test")))
