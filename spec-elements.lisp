@@ -2,7 +2,7 @@
 
 
 (defun spec::diagram (&rest entries)
-  (let ((*current-graph* (make-instance 'graph :border-width nil))
+  (let ((*current-graph* (make-instance 'graph))
 	(*current-id-node-map* (make-hash-table)))
     (dolist (entry entries)
       (spec-to-graph-entry entry))
