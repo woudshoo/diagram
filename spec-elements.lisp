@@ -2,7 +2,10 @@
 
 
 (defun spec::diagram (&rest entries)
-  (let ((*current-graph* (make-instance 'graph))
+  (let ((*current-graph* (make-instance 'graph
+					:decoration (make-instance 'file-node-decoration :file-type "GRAPH")
+					:padding 10
+					:dot-attributes '(("splines" "ortho"))))
 	(*current-id-node-map* (make-hash-table)))
     (dolist (entry entries)
       (spec-to-graph-entry entry))

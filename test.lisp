@@ -29,7 +29,8 @@
 (defun test-1 ()
   (create-diagram-pdf :in-file (asdf:system-relative-pathname  "diagram" "test.spec" ) :out-file #P "/tmp/test-diagram.pdf"))
 
-
+(defun dot-1 ()
+  (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "test.spec" ) ))
 
 (defmethod stroke :after ((box tt::text-line) x y)
   (when (and nil (> (dy box) 3))
@@ -97,7 +98,7 @@
       (pdf:with-page ()
 	(let* ((content (tt::compile-text ()
 			 (tt::paragraph (:font font-name :font-size *fs* :color '(0.5 0.5 0.5))
-			   "AjQh" :eol "vclT")))
+			   "AVjQh" :eol "vclT")))
 	       (content-2 (tt::compile-text ()
 			    (tt::paragraph (:font "Times-Roman" :font-size 10)
 			      "font name: " (tt::put-string (pdf:font-name *ff*)) :eol
@@ -110,3 +111,6 @@
 	  (tt::draw-block content 20 520 500 500 :special-fn #'draw-font-box)
 	  (tt::draw-block content-2 20 600 500 200)))
       (pdf:write-document outfile))))
+
+
+

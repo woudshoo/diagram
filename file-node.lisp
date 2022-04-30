@@ -14,7 +14,7 @@
   ((file-type :accessor file-type :initarg :file-type :initform ".unknown"))
   (:default-initargs :size-adjust '(0 10 0 0)))
 
-(defmethod tt::stroke-node-decoration ((node graph-node) (decoration file-node-decoration))
+(defmethod tt::stroke-node-decoration ((node box) (decoration file-node-decoration))
   (call-next-method)
   (with-quad (l-a t-a) (tt::size-adjust decoration)
     (let* ((th t-a)
