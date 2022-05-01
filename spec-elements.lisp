@@ -13,7 +13,7 @@
 
 
 (defun spec::node (id label)
-  (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12 :color '(1 0 0))
+  (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12)
 		 (etypecase label
 		   (string (tt::put-string label))
 		   (t (eval label)))))
@@ -29,27 +29,30 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun spec::-> (id-a id-b)
-  (make-instance 'graph-edge :graph *current-graph*
+  (make-instance 'tt::ortho-edge :graph *current-graph*
 			     :head (get-node id-a) :tail (get-node id-b)
 			     :edge-arrows  '(:head :arrow)))
 
 (defun spec::-o (id-a id-b)
-  (make-instance 'graph-edge :graph *current-graph*
+  (make-instance 'tt::ortho-edge :graph *current-graph*
 			     :head (get-node id-a) :tail (get-node id-b)
 			     :edge-arrows  '(:head :circle)))
 
 (defun spec::<- (id-a id-b)
-  (make-instance 'graph-edge :graph *current-graph*
+  (make-instance 'tt::ortho-edge :graph *current-graph*
 			     :head (get-node id-a) :tail (get-node id-b)
 			     :edge-arrows '(:tail :arrow)))
 
-(defun spec::-- (id-a id-b)
-  (make-instance 'graph-edge :graph *current-graph*
-			     :head (get-node id-a) :tail (get-node id-b)
-			     :edge-arrows nil))
+(defun spec::-- (&rest node-ids)
+  (loop :for (id-a id-b) :on node-ids
+	:while id-b
+	:do
+	   (make-instance 'tt::ortho-edge :graph *current-graph*
+				      :head (get-node id-a) :tail (get-node id-b)
+				      :edge-arrows nil)))
 
 (defun spec::<-> (id-a id-b)
-  (make-instance 'graph-edge :graph *current-graph*
+  (make-instance 'tt::ortho-edge :graph *current-graph*
 			     :head (get-node id-a) :tail (get-node id-b)
 			     :edge-arrows '(:tail :arrow :head :arrow)))
 

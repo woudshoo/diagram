@@ -10,17 +10,18 @@
 ;;  |                     |                     
 ;;  +---------------------+ 
 
-(defclass file-node-decoration (tt::graph-node-decoration-box)
+(defclass file-node-decoration (tt::box-decoration)
   ((file-type :accessor file-type :initarg :file-type :initform ".unknown"))
   (:default-initargs :size-adjust '(0 10 0 0)))
 
-(defmethod tt::stroke-node-decoration ((node box) (decoration file-node-decoration))
+(defmethod tt::stroke-decoration ((node box) (decoration file-node-decoration))
   (call-next-method)
   (with-quad (l-a t-a) (tt::size-adjust decoration)
     (let* ((th t-a)
 	   (x0 (x node))
 	   (x1 (+ (x node) (dx node)))
 	   (y (- (y node) th)))
+
       (pdf:with-saved-state
 	(pdf:set-color-stroke '(0.9 0.5 0.9))
 	(pdf:set-color-fill '(0.9 0.5 0.9))
@@ -31,7 +32,7 @@
 
 
 (defun spec::file-node (id file-type content)
-  (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12 :color '(1 0 0)) (tt::put-string content)))
+  (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12) (tt::put-string content)))
 	 (vbox (tt::make-filled-vbox text 70 400))
 	 (node (make-instance 'graph-node :data vbox
 					 :graph *current-graph*
