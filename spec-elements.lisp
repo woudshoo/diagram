@@ -4,23 +4,23 @@
 (defun spec::diagram (&rest entries)
   (let ((*current-graph* (make-instance 'graph
 					:decoration (make-instance 'file-node-decoration :file-type "GRAPH")
-					:padding 10
-					:dot-attributes '(("splines" "ortho"))))
+					:padding 10 ))
 	(*current-id-node-map* (make-hash-table)))
     (dolist (entry entries)
       (spec-to-graph-entry entry))
     *current-graph*))
 
+(defun spec::attributes (&rest entries)
+  (setf (tt::dot-attributes *current-graph*)
+	(append (tt::dot-attributes *current-graph*) entries)))
 
 (defun spec::node (id label)
   (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12)
 		 (etypecase label
 		   (string (tt::put-string label))
 		   (t (eval label)))))
-	 (vbox (tt::make-filled-vbox text 70 400))
-	 (node (make-instance 'graph-node :data vbox :graph *current-graph* :decoration tt::+box+)))
-    (register-node id node)
-    node))
+	 (vbox (tt::make-filled-vbox text 70 400)))
+    (change-class (get-node id) 'graph-node :data vbox :decoration tt::+box+)))
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun spec::same-rank (&rest ids)

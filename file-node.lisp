@@ -33,9 +33,8 @@
 
 (defun spec::file-node (id file-type content)
   (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12) (tt::put-string content)))
-	 (vbox (tt::make-filled-vbox text 70 400))
-	 (node (make-instance 'graph-node :data vbox
-					 :graph *current-graph*
-					 :decoration (make-instance 'file-node-decoration :file-type file-type))))
-    (register-node id node)))
+	 (vbox (tt::make-filled-vbox text 70 400)))
+    (change-class (get-node id) 'graph-node
+		  :data vbox
+		  :decoration (make-instance 'file-node-decoration :file-type file-type))))
 

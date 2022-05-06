@@ -44,8 +44,11 @@ Where
 (defparameter *current-graph* nil "Current GRAPH to be creaded when converting SPEC to GRAPH")
 (defparameter *current-id-node-map* nil "Maps ids to GRAPH nodes")
 
-(defun register-node (id node)
-  (setf (gethash id *current-id-node-map*) node))
+
 
 (defun get-node (id)
-  (gethash id *current-id-node-map*))
+  (or (gethash id *current-id-node-map*)
+      (setf (gethash id *current-id-node-map*)
+	    (make-instance 'graph-node
+			   :data (symbol-name id)
+			   :graph *current-graph*))))
