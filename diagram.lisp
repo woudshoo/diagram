@@ -1,6 +1,8 @@
 ;;;; diagram.lisp
-
 (in-package #:diagram)
+
+
+(setq tt::*dot-command* "/opt/local/bin/dot")
 
 (defun create-diagram-pdf (&key in-file out-file)
   (let ((graph (graph-from-spec-file in-file)))

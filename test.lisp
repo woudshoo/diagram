@@ -2,19 +2,20 @@
 
 
 
-;;;(pdf::load-ttf-font "/System/Library/PrivateFrameworks/FontServices.framework/Versions/A/Resources/Fonts/ApplicationSupport/SchoolHouse Printed A.ttf")
+(pdf::load-ttf-font "/System/Library/PrivateFrameworks/FontServices.framework/Versions/A/Resources/Fonts/ApplicationSupport/SchoolHouse Printed A.ttf")
 ;;; This gave the following error
 ;;; kerning subtable value: #x0 (expected #x1)
 ;;;   [Condition of type ZPB-TTF::UNSUPPORTED-FORMAT]
-
+;;; OK.
 
 
 (pdf::load-ttf-font "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf")
 
-;;;(pdf::load-ttf-font  "/System/Library/PrivateFrameworks/FontServices.framework/Versions/A/Resources/Fonts/ApplicationSupport/SchoolHouse Cursive B.ttf")
+(pdf::load-ttf-font  "/System/Library/PrivateFrameworks/FontServices.framework/Versions/A/Resources/Fonts/ApplicationSupport/SchoolHouse Cursive B.ttf")
 ;;; error:
 ;;;; Evaluation aborted on #<TYPE-ERROR expected-type: (MOD 1114112) datum: 2097168>.
 ;;; (during parsing cmap I think)
+;;; NOW OK.
 
 ;;; (test-font #P"/System/Library/Fonts/Supplemental/Zapfino.ttf" "/tmp/helvetica.pdf")
 ;; error: Unsupported version value in "kern" table: #x00000001 (expected #x00000000)
@@ -28,9 +29,13 @@
 
 (defun test-1 ()
   (create-diagram-pdf :in-file (asdf:system-relative-pathname  "diagram" "test.spec" ) :out-file #P "/tmp/test-diagram.pdf"))
+(defun test-2 ()
+  (create-diagram-pdf :in-file (asdf:system-relative-pathname  "diagram" "rmfmagic.spec" ) :out-file #P "/tmp/rmfmagic-diagram.pdf"))
 
 (defun dot-1 ()
   (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "test.spec" ) ))
+(defun dot-2 ()
+  (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "rmfmagic.spec" ) ))
 
 (defmethod stroke :after ((box tt::text-line) x y)
   (when (and nil (> (dy box) 3))
@@ -108,9 +113,10 @@
 			      "descener: "  (tt::put-string (format nil "~A" (pdf:get-font-descender *ff*))) :eol
 			      "leading: " (tt::put-string (format nil "~A" (pdf::leading *ff*)))
 			      ))))
-	  (tt::draw-block content 20 520 500 500 :special-fn #'draw-font-box)
+	  (tt::draw-block content 20 520 500 700 :special-fn #'draw-font-box)
 	  (tt::draw-block content-2 20 600 500 200)))
-      (pdf:write-document outfile))))
+      (pdf:write-document outfile)
+      font)))
 
 
 
@@ -156,3 +162,14 @@
     (make-instance 'tt::ortho-edge :head n10 :tail n16 :graph g1)
     (compute-graph-layout g1)
     g1))
+
+
+
+(defun unicode-octets-to-string (octets)
+  (let ((string (make-string (/ (length octets) 2))))
+    (flet ((ref16 (i)
+             (+ (ash (aref octets i) 16)
+                (aref octets (1+ i)))))
+      (loop for i from 0 below (length octets) by 2
+            for j from 0
+	    :collect (ref16 i)))))

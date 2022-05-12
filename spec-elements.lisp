@@ -3,12 +3,18 @@
 
 (defun spec::diagram (&rest entries)
   (let ((*current-graph* (make-instance 'graph
-					:decoration (make-instance 'file-node-decoration :file-type "GRAPH")
 					:padding 10 ))
 	(*current-id-node-map* (make-hash-table)))
     (dolist (entry entries)
       (spec-to-graph-entry entry))
     *current-graph*))
+
+(defun spec::edge-type (type)
+  (ecase type
+    (spec::ortho
+     (spec::attributes '("splines" "ortho"))
+     (setf *edge-class* 'tt::ortho-edge))
+    (spec::bezier nil)))
 
 (defun spec::attributes (&rest entries)
   (setf (tt::dot-attributes *current-graph*)
@@ -29,32 +35,22 @@
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 (defun spec::-> (id-a id-b)
-  (make-instance 'tt::ortho-edge :graph *current-graph*
-			     :head (get-node id-a) :tail (get-node id-b)
-			     :edge-arrows  '(:head :arrow)))
+  (make-edge id-a id-b :edge-arrows '(:head :arrow)))
 
 (defun spec::-o (id-a id-b)
-  (make-instance 'tt::ortho-edge :graph *current-graph*
-			     :head (get-node id-a) :tail (get-node id-b)
-			     :edge-arrows  '(:head :circle)))
+  (make-edge id-a id-b :edge-arrows '(:head :circle)))
 
 (defun spec::<- (id-a id-b)
-  (make-instance 'tt::ortho-edge :graph *current-graph*
-			     :head (get-node id-a) :tail (get-node id-b)
-			     :edge-arrows '(:tail :arrow)))
+  (make-edge id-a id-b :edge-arrows '(:tail :arrow)))
 
 (defun spec::-- (&rest node-ids)
   (loop :for (id-a id-b) :on node-ids
 	:while id-b
 	:do
-	   (make-instance 'tt::ortho-edge :graph *current-graph*
-				      :head (get-node id-a) :tail (get-node id-b)
-				      :edge-arrows nil)))
+	   (make-edge id-a id-b)))
 
 (defun spec::<-> (id-a id-b)
-  (make-instance 'tt::ortho-edge :graph *current-graph*
-			     :head (get-node id-a) :tail (get-node id-b)
-			     :edge-arrows '(:tail :arrow :head :arrow)))
+  (make-edge id-a id-b :edge-arrows '(:tail :arrow :head :arrow)))
 
 
 

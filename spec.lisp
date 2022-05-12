@@ -42,13 +42,27 @@ Where
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 (defparameter *current-graph* nil "Current GRAPH to be creaded when converting SPEC to GRAPH")
+(defparameter *current-entity* nil "Current entity, either GRAPH, NODE or EDGE.   Used for modifying the current object in generic option setting code.")
+
 (defparameter *current-id-node-map* nil "Maps ids to GRAPH nodes")
 
-
-
 (defun get-node (id)
+  "Returns a node for ID.
+
+If a node with ID already exists, return that one.  If no node is associated with ID, create a new one."
   (or (gethash id *current-id-node-map*)
       (setf (gethash id *current-id-node-map*)
 	    (make-instance 'graph-node
 			   :data (symbol-name id)
 			   :graph *current-graph*))))
+
+
+(defparameter *edge-class* 'tt::graph-edge)
+
+(defun make-edge (id-a id-b &key edge-arrows)
+  "Returns the default edge between ID-A and ID-B"
+  (make-instance *edge-class*
+		 :graph *current-graph*
+		 :head (get-node id-a)
+		 :tail (get-node id-b)
+		 :edge-arrows edge-arrows))

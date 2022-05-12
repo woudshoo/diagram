@@ -1,12 +1,6 @@
 (in-package #:diagram)
 
 
-
-
-
-
-
-
 (defun spec::cluster (&rest nodes)
   (make-instance 'tt::graph-cluster :data (mapcar #'get-node nodes)
 			  :decoration (make-instance 'file-node-decoration
