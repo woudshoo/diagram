@@ -9,7 +9,8 @@
 ;;; OK.
 
 
-(pdf::load-ttf-font "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf")
+					;(pdf::load-ttf-font "/System/Library/Frameworks/Python.framework/Versions/2.7/Extras/lib/python/matplotlib/mpl-data/fonts/ttf/STIXGeneral.ttf")
+;(pdf::load-ttf-font "/System/Library/Fonts/Supplemental/STIXGeneral.otf")
 
 (pdf::load-ttf-font  "/System/Library/PrivateFrameworks/FontServices.framework/Versions/A/Resources/Fonts/ApplicationSupport/SchoolHouse Cursive B.ttf")
 ;;; error:
@@ -36,6 +37,13 @@
   (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "test.spec" ) ))
 (defun dot-2 ()
   (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "rmfmagic.spec" ) ))
+
+
+(defun cps-1 ()
+  (let ((graph
+	  (typeset::compute-graph-layout-cps (graph-from-spec-file (asdf:system-relative-pathname "diagram" "test-simple.spec")) )))
+    (write-graph-pdf graph #P "/tmp/cps-1.pdf" )
+    graph))
 
 (defmethod stroke :after ((box tt::text-line) x y)
   (when (and nil (> (dy box) 3))

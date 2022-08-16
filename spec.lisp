@@ -22,9 +22,11 @@ Where
 
 ...
 "
-  (if (fboundp (car spec))
-      (apply (car spec) (cdr spec))
-      (error "Symbol ~A is not defined" (car spec))))
+  (cond
+    ((eq 'defun (car spec)) (eval spec))
+    ((fboundp (car spec))
+     (apply (car spec) (cdr spec)))
+    (t (error "Symbol ~A is not defined" (car spec)))))
 
 
 (defun parse-graph-package ()
@@ -59,10 +61,15 @@ If a node with ID already exists, return that one.  If no node is associated wit
 
 (defparameter *edge-class* 'tt::graph-edge)
 
-(defun make-edge (id-a id-b &key edge-arrows)
+(defun make-edge (id-a id-b &key edge-arrows (direction :nond))
   "Returns the default edge between ID-A and ID-B"
   (make-instance *edge-class*
 		 :graph *current-graph*
 		 :head (get-node id-a)
 		 :tail (get-node id-b)
-		 :edge-arrows edge-arrows))
+		 :edge-arrows edge-arrows
+		 :direction direction))
+
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+

@@ -1,11 +1,13 @@
+;; -*- mode:lisp -*-
 (diagram
- (eval (defun f-node (id desc) (file-node id ".TST" desc)))
- (eval (defun bold (string) (tt::with-style  (:font-size 8 :h-align :center :font "Helvetica-Bold") string)))
- (eval (defun stix (string) (tt::with-style (:font "STIXGeneral-Regular") string)))
- (eval (defun noto (string) (tt::with-style (:font "NotoMono") string)))
- (eval (defun pbook (string) (tt::with-style (:font "PadaukBook-Bold")  string)))
+ (defun f-node (id desc) (file-node id ".TST" desc))
+ (defun bold (string) `(tt::with-style  (:font-size 8 :h-align :center :font "Helvetica-Bold") ,string))
+ (defun stix (string) (tt::with-style (:font "STIXGeneral-Regular") string))
+ (defun noto (string) (tt::with-style (:font "NotoMono") string))
+ (defun pbook (string) (tt::with-style (:font "PadaukBook-Bold")  string))
 
- (attributes ("splines" "ortho"))
+; (edge-type ortho)
+; (attributes ("splines" "ortho"))
  (node b "j box")
  (node h "h-mode-mixin j")
  (node c (bold "cast j"))
@@ -38,7 +40,7 @@
  (-- b1 b2 b3 b4 b5 b6)
 ; (same-rank f g h)
 ; (same-rank b c)
-(cluster b h c)
+ (cluster b h c)
  (cluster a1 a3 f)
  (-o b h)
  (<- b h)
