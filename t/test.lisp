@@ -1,6 +1,24 @@
-(in-package #:diagram)
+(defpackage #:diagram/test
+  (:use #:cl #:5am #:diagram))
+
+(in-package #:diagram/test)
 
 
+(defun file-size (fn)
+  (with-open-file (file fn) 
+    (file-length file)))
+
+(defun file-not-empty-p (fn)
+  (> (file-size fn) 0))
+
+(defmacro with-temporary-file ((fn) &body body)
+  `(uiop:call-with-temporary-file
+    (lambda (,fn)
+      ,@body)
+   :want-stream-p nil))
+
+(def-suite :diagram)
+(in-suite :diagram)
 
 (pdf::load-ttf-font "/System/Library/PrivateFrameworks/FontServices.framework/Versions/A/Resources/Fonts/ApplicationSupport/SchoolHouse Printed A.ttf")
 ;;; This gave the following error
@@ -28,22 +46,28 @@
 
 (pdf::load-ttf-font "/usr/local/texlive/2017/texmf-dist/fonts/truetype/public/padauk/PadaukBook-Bold.ttf")
 
-(defun test-1 ()
-  (create-diagram-pdf :in-file (asdf:system-relative-pathname  "diagram" "test.spec" ) :out-file #P "/tmp/test-diagram.pdf"))
-(defun test-2 ()
-  (create-diagram-pdf :in-file (asdf:system-relative-pathname  "diagram" "rmfmagic.spec" ) :out-file #P "/tmp/rmfmagic-diagram.pdf"))
+(test test-1
+  (with-temporary-file (fn)
+    (create-diagram-pdf :in-file (asdf:system-relative-pathname  "diagram" "test.spec" ) :out-file fn)
+    (is-true (file-not-empty-p fn))))
 
-(defun dot-1 ()
-  (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "test.spec" ) ))
-(defun dot-2 ()
-  (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "rmfmagic.spec" ) ))
+(test test-2
+  (with-temporary-file (fn)
+    (create-diagram-pdf :in-file (asdf:system-relative-pathname  "diagram" "rmfmagic.spec" ) :out-file fn)
+    (is-true (file-not-empty-p fn))))
+
+(test dot-1 
+  (is-true (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "test.spec" ) )))
+
+(test dot-2 
+  (is-true (dot-file-from-spec (asdf:system-relative-pathname  "diagram" "rmfmagic.spec" ) )))
 
 
-(defun cps-1 ()
+(test cps-1 
   (let ((graph
 	  (typeset::compute-graph-layout-cps (graph-from-spec-file (asdf:system-relative-pathname "diagram" "test-simple.spec")) )))
     (write-graph-pdf graph #P "/tmp/cps-1.pdf" )
-    graph))
+    (is-true graph "testing is graph creation worked")))
 
 (defmethod stroke :after ((box tt::text-line) x y)
   (when (and nil (> (dy box) 3))

@@ -25,7 +25,12 @@
 		"DATA")
   (:import-from "PDF"
 		"WITH-PAGE"
-		"WRITE-DOCUMENT"))
+		"WRITE-DOCUMENT")
+  (:export
+   #:create-diagram-pdf
+   #:dot-file-from-spec
+   #:graph-from-spec-file
+   #:write-graph-pdf))
 
 (defpackage #:spec
   (:use common-lisp)
