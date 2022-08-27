@@ -9,11 +9,17 @@
   :pathname "src/"
   :serial t
   :components ((:file "package")
-               (:file "diagram")
-	       (:file "spec")
-	       (:file "spec-elements")
-	       (:file "file-node")
-	       (:file "cluster"))
+	       
+	       (:module "spec"
+		:components ((:file "package")
+			     (:file "spec" :depends-on ("package"))
+			     (:file "spec-elements" :depends-on ("spec" "package"))
+			     (:file "file-node" :depends-on ("spec" "package"))
+			     (:file "cluster" :depends-on ("spec" "package")))
+		:depends-on ("package"))
+	       
+               (:file "diagram" :depends-on ("spec")))
+  
   :in-order-to ((test-op (test-op "diagram/test"))))
 
 
@@ -21,4 +27,4 @@
   :depends-on ("diagram" "fiveam" "uiop")
   :pathname "t/"
   :components ((:file "test"))
-  :perform (test-op (o c) (symbol-call :5am :run! :diagram)))
+  :perform (asdf:test-op (o c) (symbol-call :5am :run! :diagram)))
