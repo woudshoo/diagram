@@ -49,10 +49,10 @@
   (loop :for (id-a id-b) :on node-ids
 	:while id-b
 	:do
-	   (make-edge id-a id-b :direction :down)))
+	   (make-edge id-a id-b :direction :none)))
 
 (defun spec::<-> (id-a id-b)
-  (make-edge id-a id-b :edge-arrows '(:tail :arrow :head :arrow) :direction :down))
+  (make-edge id-a id-b :edge-arrows '(:tail :arrow :head :arrow) :direction :none))
 
 
 

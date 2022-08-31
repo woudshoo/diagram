@@ -66,6 +66,7 @@
 (test cps-1 
   (let ((graph
 	  (typeset::compute-graph-layout-cps (graph-from-spec-file (asdf:system-relative-pathname "diagram" "test-simple.spec")) )))
+    (is-true graph "Graph is at least generated")
     (write-graph-pdf graph #P "/tmp/cps-1.pdf" )
     (is-true graph "testing is graph creation worked")))
 
@@ -154,7 +155,7 @@
 
 
 
-(defun gen-box-graph ()
+#+nil (defun gen-box-graph ()
   (let* ((g1 (make-instance 'graph :dot-attributes '(#+nil("rankdir" "LR")("nodesep" "0.3")("ranksep" "0.8") ("splines" "ortho"))
 				   :max-dx 500 :max-dy 300))
 	 (n1 (make-instance 'graph-node :data "box" :graph g1))

@@ -1,7 +1,7 @@
 ;; -*- mode:lisp -*-
 (diagram
  (defun f-node (id desc) (file-node id ".TST" desc))
- (defun bold (string) `(tt::with-style  (:font-size 8 :h-align :center :font "Helvetica-Bold") ,string))
+ (defun bold (string) (tt::with-style  (:font-size 8 :h-align :center :font "Helvetica-Bold") string))
  (defun stix (string) (tt::with-style (:font "STIXGeneral-Regular") string))
  (defun noto (string) (tt::with-style (:font "NotoMono") string))
  (defun pbook (string) (tt::with-style (:font "PadaukBook-Bold")  string))
@@ -38,10 +38,10 @@
  (-- x1 x2 x3)
  (f-node x3 "X3 for real")
  (-- b1 b2 b3 b4 b5 b6)
-; (same-rank f g h)
-; (same-rank b c)
-; (cluster b h c)
-; (cluster a1 a3 f)
+ (same-rank f g h)
+ (same-rank b c)
+ (cluster b h c)
+ (cluster a1 a3 f)
  (-o b h)
  (<- b h)
  (<- b f)
