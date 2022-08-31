@@ -18,5 +18,5 @@
 
 (defun dot-file-from-spec (in-file)
   (let ((graph (graph-from-spec-file in-file)))
-    (tt::gen-graph-dot-data graph t)
-    graph))
+    (with-output-to-string (s)
+      (tt::gen-graph-dot-data graph s))))

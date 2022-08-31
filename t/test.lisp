@@ -1,5 +1,6 @@
 (defpackage #:diagram/test
-  (:use #:cl #:5am #:diagram))
+  (:use #:cl #:5am #:diagram #:tt)
+  (:import-from #:tt dx dy))
 
 (in-package #:diagram/test)
 
