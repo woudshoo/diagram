@@ -40,12 +40,13 @@
 ;;; (test-font #P"/System/Library/Fonts/Supplemental/Zapfino.ttf" "/tmp/helvetica.pdf")
 ;; error: Unsupported version value in "kern" table: #x00000001 (expected #x00000000)
 
-(pdf::load-ttf-font "/usr/local/texlive/2017/texmf-dist/fonts/truetype/google/noto/NotoMono.ttf")
+;(pdf::load-ttf-font "/usr/local/texlive/2017/texmf-dist/fonts/truetype/google/noto/NotoMono.ttf")
+(pdf:load-ttf-font (asdf:system-relative-pathname "diagram" "t/NotoSansMono-Regular.ttf"))
 
 
 
-
-(pdf::load-ttf-font "/usr/local/texlive/2017/texmf-dist/fonts/truetype/public/padauk/PadaukBook-Bold.ttf")
+;(pdf::load-ttf-font "/usr/local/texlive/2017/texmf-dist/fonts/truetype/public/padauk/PadaukBook-Bold.ttf")
+(pdf:load-ttf-font (asdf:system-relative-pathname "diagram" "t/PadaukBook-Bold.ttf"))
 
 (test test-1
   (with-temporary-file (fn)
