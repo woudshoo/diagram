@@ -68,7 +68,8 @@ If a node with ID already exists, return that one.  If no node is associated wit
 		 :head (get-node id-a)
 		 :tail (get-node id-b)
 		 :edge-arrows edge-arrows
-		 :direction direction))
+		 :direction direction
+		 :width 0))
 
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
