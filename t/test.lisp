@@ -1,5 +1,5 @@
 (defpackage #:diagram/test
-  (:use #:cl #:5am #:diagram #:tt)
+  (:use #:cl #:5am #:diagram/driver #:diagram/spec/spec #:diagram/spec/spec-elements #:tt)
   (:import-from #:tt dx dy))
 
 (in-package #:diagram/test)

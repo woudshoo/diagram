@@ -1,4 +1,27 @@
-(in-package #:diagram)
+(uiop:define-package :diagram/spec/class-node
+    (:import-from :typeset
+		  #:box-decoration
+		  #:stroke-decoration
+		  #:with-quad
+		  #:graph-node
+		  #:box)
+  (:import-from :pdf
+		#:x
+		#:dx
+		#:y
+		#:set-line-width
+		#:set-color-stroke
+		#:set-color-fill
+		#:rectangle
+		#:fill-and-stroke
+		#:draw-right-text
+		#:draw-centered-text
+		#:compile-text
+		#:make-filled-vbox)
+  (:import-from :diagram/spec/spec
+		#:get-node))
+
+(in-package :diagram/spec/class-node)
 
 
 ;;;

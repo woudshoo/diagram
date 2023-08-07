@@ -1,4 +1,17 @@
-(in-package #:diagram)
+(uiop:define-package :diagram/spec/spec
+  (:export
+   #:graph-from-spec-file
+   #:*current-graph*
+   #:*current-entity*
+   #:get-node
+   #:spec-to-graph-entry)
+  (:import-from :spec)
+  (:import-from :typeset
+		#:graph-node))
+
+;; the following package is for parsing/reading the spec files
+
+(in-package :diagram/spec/spec)
 
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 ;; Reading and high-levelparsing
