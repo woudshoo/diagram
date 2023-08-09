@@ -11,11 +11,15 @@
 		#:dy
 		#:gen-graph-dot-data
 		#:compute-graph-layout
+		#:compute-graph-layout-cps
 		#:stroke)
   (:export
    #:create-diagram-pdf
    #:dot-file-from-spec
-   #:write-graph-pdf))
+   #:write-graph-pdf
+   #:create-diagram-cps-pdf
+   #:cps-problem
+   #:cps-problem-simple))
 
 (in-package :diagram/driver)
 
@@ -25,6 +29,11 @@
 (defun create-diagram-pdf (&key in-file out-file)
   (let ((graph (graph-from-spec-file in-file)))
     (compute-graph-layout graph)
+    (write-graph-pdf graph out-file)))
+
+(defun create-diagram-cps-pdf (&key in-file out-file)
+  (let ((graph (graph-from-spec-file in-file)))
+    (compute-graph-layout-cps graph)
     (write-graph-pdf graph out-file)))
 
 (defun write-graph-pdf (graph out-file)
@@ -38,3 +47,11 @@
   (let ((graph (graph-from-spec-file in-file)))
     (with-output-to-string (s)
       (tt::gen-graph-dot-data graph s))))
+
+(defun cps-problem (in-file)
+  (let ((graph (graph-from-spec-file in-file)))
+    (typeset::make-graph-cps-problem graph)))
+
+(defun cps-problem-simple (in-file)
+  (let ((graph (graph-from-spec-file in-file)))
+    (typeset::make-graph-cps-problem-simple graph)))

@@ -78,8 +78,8 @@ If a node with ID already exists, return that one.  If no node is associated wit
   "Returns the default edge between ID-A and ID-B"
   (make-instance *edge-class*
 		 :graph *current-graph*
-		 :head (get-node id-a)
-		 :tail (get-node id-b)
+		 :head (get-node id-b)
+		 :tail (get-node id-a)
 		 :edge-arrows edge-arrows
 		 :direction direction
 		 :width 0))

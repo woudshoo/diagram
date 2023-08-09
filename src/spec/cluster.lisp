@@ -2,12 +2,10 @@
     (:import-from :typeset
 		  #:graph-cluster)
   (:import-from :diagram/spec/spec
-		#:get-node)
-  (:import-from :diagram/spec/file-node
-		#:file-node-decoration)
-  (:import-from :diagram/spec/spec
+		#:get-node
 		#:*current-graph*)
-  (:import-from :spec))
+  (:import-from :diagram/spec/file-node
+		#:file-node-decoration))
 (in-package :diagram/spec/cluster)
 
 

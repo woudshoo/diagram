@@ -4,11 +4,11 @@
 		  #:stroke-decoration
 		  #:with-quad
 		  #:graph-node
+		  #:dx
+		  #:x
+		  #:y
 		  #:box)
   (:import-from :pdf
-		#:x
-		#:dx
-		#:y
 		#:set-line-width
 		#:set-color-stroke
 		#:set-color-fill
@@ -38,6 +38,7 @@
 		     :border-width 0))
 
 
+
 (defmethod tt::stroke-decoration ((node box) (decoration class-node-decoration))
   (call-next-method)
   (with-quad (l-a t-a) (tt::size-adjust decoration)
@@ -57,9 +58,9 @@
       (pdf:draw-centered-text (+ x0 (* 0.5 w)) (+ y (* 0.15 th)) (class-name decoration) (pdf:get-font "Helvetica") th))))
 
 
-(defun spec::class-node (id class-name content)
+(defun spec::class-node (id class-name &optional (content ""))
   (let* ((text (tt:compile-text (:font "Times-Roman" :font-size 12) (tt:put-string content)))
-	 (vbox (tt::make-filled-vbox text 70 400)))
+	 (vbox (tt::make-filled-vbox text 100 400)))
     (change-class (get-node id) 'graph-node
-		  :data vbox
+		  :data  vbox 
 		  :decoration (make-instance 'class-node-decoration :class-name class-name))))
