@@ -1,11 +1,34 @@
-(in-package #:diagram)
+(uiop:define-package :diagram/spec/file-node
+    (:import-from #:spec)
+  (:import-from :typeset
+		#:box-decoration
+		#:stroke-decoration
+		#:size-adjust
+		#:box
+		#:x
+		#:dx
+		#:y
+		#:with-quad
+		#:graph-node)
+  (:import-from :pdf
+		#:set-color-stroke
+		#:set-color-fill
+		#:rectangle
+		#:fill-and-stroke
+		#:draw-right-text
+		#:draw-left-text
+		#:compile-text
+		#:make-filled-vbox)
+  (:import-from :diagram/spec/spec
+		#:get-node))
 
+(in-package :diagram/spec/file-node)
 
 ;;
 ;;  +---------------------+
 ;;  |/FILE/          .CSV |
 ;;  +---------------------+
-;;  | CONENT              |
+;;  | CONTENT             |
 ;;  |                     |
 ;;  |                     |                     
 ;;  +---------------------+ 

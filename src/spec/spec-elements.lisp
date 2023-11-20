@@ -1,4 +1,25 @@
-(in-package #:diagram)
+(uiop:define-package :diagram/spec/spec-elements
+    (:use :common-lisp :spec)
+  (:import-from :typeset
+		#:graph
+		#:graph-edge
+		#:ortho-edge
+		#:dot-attributes
+		#:compile-text
+		#:put-string
+		#:make-filled-vbox
+		#:+box+
+		#:add-rank-constraint
+		#:graph-node)
+  (:import-from :diagram/spec/spec
+		#:make-edge
+		#:get-node
+		#:spec-to-graph-entry
+		#:*current-graph*
+		#:*current-id-node-map*
+		#:*edge-class*))
+
+(in-package :diagram/spec/spec-elements)
 
 
 (defun spec::diagram (&rest entries)

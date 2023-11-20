@@ -1,4 +1,12 @@
-(in-package #:diagram)
+(uiop:define-package :diagram/spec/cluster
+    (:import-from :typeset
+		  #:graph-cluster)
+  (:import-from :diagram/spec/spec
+		#:get-node
+		#:*current-graph*)
+  (:import-from :diagram/spec/file-node
+		#:file-node-decoration))
+(in-package :diagram/spec/cluster)
 
 
 (defun spec::cluster (&rest nodes)
