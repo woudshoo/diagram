@@ -7,7 +7,6 @@
   :version "0.0.1"
   :depends-on (#:cl-pdf #:cl-typesetting #:cl-typegraph)
   :pathname "src/"
-  :serial t
   :components ((:file "package")
 	       
 	       (:module "spec"
